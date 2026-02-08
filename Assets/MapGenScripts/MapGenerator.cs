@@ -12,6 +12,9 @@ public class MapGenerator : MonoBehaviour
     public GameObject TEMPDOOR;
 
     public GameObject player;
+    public Transform mapParent;
+
+
 
     void Start()
     {
@@ -19,7 +22,7 @@ public class MapGenerator : MonoBehaviour
     }
 
 
-    private void GenerateMap()
+    public void GenerateMap()
     {
         int randomX = r.Next(1, mapWidth - 1);
         int randomY = r.Next(1, mapHeight - 1);
@@ -30,7 +33,7 @@ public class MapGenerator : MonoBehaviour
             {
                 if (i == 0 || i == mapWidth - 1 || j == 0 || j == mapHeight - 1)
                 {
-                    Instantiate(TEMPWALL, new Vector3(i, j, 0f), Quaternion.identity);
+                    Instantiate(TEMPWALL, new Vector3(i, j, 0f), Quaternion.identity, mapParent);
                 }
 
                 if (i == randomX && j == randomY)
@@ -47,7 +50,7 @@ public class MapGenerator : MonoBehaviour
 
     private void CreateSpawnRoom(Vector2 position)
     {
-        Instantiate(TEMP, position, Quaternion.identity);
+        Instantiate(TEMP, position, Quaternion.identity, mapParent);
         player.transform.position = position;
     }
 
@@ -72,8 +75,8 @@ public class MapGenerator : MonoBehaviour
                 break;
         }
 
-        Instantiate(TEMPDOOR, doorPos, Quaternion.identity);
-        GameObject InvalidWall = Instantiate(TEMP, doorPos, Quaternion.identity);
+        Instantiate(TEMPDOOR, doorPos, Quaternion.identity, mapParent);
+        GameObject InvalidWall = Instantiate(TEMP, doorPos, Quaternion.identity, mapParent);
 
         Destroy(InvalidWall);
     }
